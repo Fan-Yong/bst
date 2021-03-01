@@ -42,9 +42,10 @@ function getmsg_reply(obj){
 	let a=obj.msg.split(" ");	
 	a.shift();
 	obj.msg=a.join("%");
+	if (obj.msg.length<3) return;
 	
 	console.log(obj.msg);	
-	var url="http://www.datun.com.cn/ ";
+	var url="http://www.datun.com.cn/";
 	
 	request.post({url:url, form: {'query':obj.msg}}, function(error, response, body) {
 		if (!error &&  response.statusCode == 200) {
@@ -64,7 +65,7 @@ function getmsg_reply(obj){
 //回复微信用户消息
 
 function reply(obj,rmsg){ 
-	console.log("reply................"); 
+	//console.log("reply................"); 
 
 	var url="http://127.0.0.1:8073/send";	
 	rmsg=encodeURI(rmsg);
