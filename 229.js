@@ -52,7 +52,7 @@ function help(obj){
 
 function getmsg(obj,query){	
 	console.log(query);	
-	var url="http://www.datun.com.cn/";
+	var url="http://www.datun.com.cn/bst/getphone.php";
 	
 	request.post({url:url, form: {'query':query}}, function(error, response, body) {
 		if (!error &&  response.statusCode == 200) {
@@ -68,7 +68,7 @@ function getmsg(obj,query){
 
 
 function setmsg(obj,msg){	
-	console.log("setmsg");	
+	console.log(JSON.stringify(msg));	
 	return;
 	var url="http://www.datun.com.cn/";
 	
@@ -137,10 +137,10 @@ function isCanReply(obj){
 			if(a[0]=="电话"){ 
 					a.shift();
 					let query=a.join("%");
-					if (obj.msg.length<3) return false;
+					if (obj.msg.length<3) return {"type":-2};
 					return {"type":1,"msg":query};
 			}	else{
-					if(!checkTel(a[1])) return false;
+					if(!checkTel(a[1])) return {"type":-2};
 				  if(a.length==2){
 				  	a[2]="";//备注
 				  }	 
