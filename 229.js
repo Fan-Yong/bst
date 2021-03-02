@@ -45,7 +45,7 @@ server.listen(port, hostname, () => {
 	
 
 function help(obj){	
-	reply(obj,"查询电话方法:\n输入 \"电话＋空格＋关键字1＋空格＋关键字2....\"\n录入电话方法:\n输入 \"名称＋空格＋电话\"");	
+	reply(obj,"查询电话方法:\n输入 \"电话＋空格＋关键字1＋空格＋关键字2....\"\n录入电话方法:\n输入 \"名称(备注)＋空格＋电话\"");	
 }	
 
 
@@ -153,11 +153,19 @@ function isCanReply(obj){
 					return {"type":1,"msg":query};
 			}	else{
 				  let name=a[0];
+				  detail=	getdetail(name);
+				  if(detail!=""){
+				  	name=name.replace("（","(");
+				  	name=name.replace("）",")");
+				  	name=name.replace(detail,"");
+				  	detail=detail.replace("(","");
+				  	detail=detail.replace(")","");
+				  }				  
 					a.shift();
 					let phone=a.join("");
 					if(!checkTel(phone)) return {"type":-3};
 				  
-					return {"type":2,"msg":{"name":name,"phone":phone,"detail":"","input":obj.final_from_name}};
+					return {"type":2,"msg":{"name":name,"phone":phone,"detail":detail,"input":obj.final_from_name}};
 			}			
 	}	
 	
@@ -176,11 +184,18 @@ function  checkTel(str) {
 		     m=m+""+matches[i];
 		 
 		}
-		if(m.length>=7) return true;
+		if(m.length>=5) return true;
 		return false;
 	}catch(e){
 		return false;
 	}	
     
 }
- 
+function getdetail(detail){
+	detail=detail.replace(/（/g, "(")
+	detail=detail.replace(/）/g, ")")
+  let matches=detail.match(/\([\s\S]*?\)/);
+  if(matches==null) return "";
+  return matches[0];
+	
+} 
