@@ -137,7 +137,7 @@ function isCanReply(obj){
 	if(obj.msg=="help"){
 		return {"type":0};
 	}
-	if(/select|delete|update/.test(obj.msg)) return false;
+	if(/select|delete|update/.test(obj.msg)) return {"type":-100};//sql注入
 			
 	//console.log(obj.msg)
 	let a=obj.msg.split(" ");		 
