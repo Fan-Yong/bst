@@ -147,7 +147,7 @@ function isCanReply(obj){
 			if(a[0]=="电话"){ 
 					a.shift();
 					let query=a.join("%");
-					if (obj.msg.length<3) return {"type":-2};
+					if (query.length<2) return {"type":-2};
 					return {"type":1,"msg":query};
 			}	else{
 					
