@@ -24,7 +24,7 @@
 		$query="%$query%";
 		//echo $query;
 		
-		$sql="SELECT name,detail,phone FROM baishitong.telephone where name  like  ?  LIMIT 5";
+		$sql="SELECT name,detail,phone,inputer FROM baishitong.telephone where name  like  ?  LIMIT 5";
 		$stmt = $conn->prepare($sql);
 		$stmt->bind_param('s',$query);
 		$stmt->execute();
@@ -34,12 +34,17 @@
   		$name=$row["name"];
   		$phone=$row["phone"];
 			$detail=$row["detail"];
+			$inputer=$row["inputer"];
 			//echo $detail;
 			if($detail==''){
   			$reply=$reply.$name.":".$phone."\\n";
 			}else{
-				$reply=$reply.$name."(".$detail."):".$phone."\\n";
+				$reply=$reply.$name."(".$detail."):".$phone;
 			}
+			if($inputer!=''){
+				$reply=$reply."(信息提供:".$inputer.")";
+			}
+			$reply=$reply."\\n";
 		}
 		if($reply!=''){
 			$reply=substr($reply,0,-2);
