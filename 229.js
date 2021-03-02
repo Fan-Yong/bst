@@ -147,7 +147,8 @@ function isCanReply(obj){
 					if (obj.msg.length<3) return {"type":-2};
 					return {"type":1,"msg":query};
 			}	else{
-					if(!checkTel(a[1])) return {"type":-2};
+					
+					if(!checkTel(a[1])) return {"type":-3};
 				  if(a.length==2){
 				  	a[2]="";//备注
 				  }	 
@@ -156,20 +157,21 @@ function isCanReply(obj){
 	}	
 	
 	 
-	return {"type":-2};
+	return {"type":-4};
 	
 }
 function  checkTel(str) {
-    var  re = /1(\d|\s){10}/;
-    if (re.test(str)) {
-        return true;
-    }  
+	  console.log(str);
     
-    
-    re = /\d{7,8}/;
-    if (re.test(str)) {
-        return true;
-    }  
-    return false;
+    let matches = str.match(/\d+/g);
+    let m="";
+    for(let i=0;i<matches.length;i++)
+		{
+		     m=m+""+matches[i];
+		 
+		}
+		if(m.length>7) return true;
+		return false;
     
 }
+ 
