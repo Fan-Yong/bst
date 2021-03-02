@@ -160,7 +160,7 @@ function isCanReply(obj){
 	
 }
 function  checkTel(str) {
-    var  re = /1\d{10}/;
+    var  re = /1(\d|\s){10}/;
     if (re.test(str)) {
         return true;
     }  
