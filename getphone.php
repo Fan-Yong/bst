@@ -12,7 +12,7 @@
 		}
 
 
-		$servername = "localhost";
+		$servername = " ";
 		$username = " ";
 		$password = " ";
 		$conn = new mysqli($servername, $username, $password);
@@ -21,12 +21,22 @@
     	//die("database error" . $conn->connect_error);
 			die("{ \"err\":\"100\" }");//数据库错误
 		}
-		$query="%$query%";
+		
+		$q=explode('%', $query);
+		$num = count($q);
+		$query="";
+		for($i=0;$i<$num;$i++){
+			$query=$query." CONCAT(name,detail) like '%".$q[$i]."%' ";
+			if($i<$num-1){
+				$query=$query." and ";
+			}
+
+		}
 		//echo $query;
 		
-		$sql="SELECT name,detail,phone,inputer FROM baishitong.telephone where name  like  ?  LIMIT 5";
+		$sql="SELECT  name,detail,phone,inputer FROM baishitong.telephone where ".$query."  LIMIT 5";
 		$stmt = $conn->prepare($sql);
-		$stmt->bind_param('s',$query);
+	  //$stmt->bind_param('s',$query);
 		$stmt->execute();
 		$reply="";
 		$result = $stmt->get_result();

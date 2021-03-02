@@ -136,11 +136,14 @@ function isCanReply(obj){
 	
 	if(obj.msg=="help"){
 		return {"type":0};
-	}		
+	}
+	if(/select|delete|update/.test(obj.msg)) return false;
+			
 	//console.log(obj.msg)
 	let a=obj.msg.split(" ");		 
 	
-	if(a.length>=2 && a.length<4){
+	
+	if(a.length>=2 ){
 			if(a[0]=="电话"){ 
 					a.shift();
 					let query=a.join("%");
