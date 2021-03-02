@@ -69,15 +69,22 @@ function getmsg(obj,query){
 
 function setmsg(obj,msg){	
 	console.log(JSON.stringify(msg));	
-	return;
-	var url="http://www.datun.com.cn/";
+	 
+	var url="http://www.datun.com.cn/bst/setphone.php";
 	
 	request.post({url:url, form:  msg }, function(error, response, body) {
 		if (!error &&  response.statusCode == 200) {
 			
 			re = JSON.parse(body);
-			if(re.err=='0')
-				reply(obj,re.msg);
+			if(re.err=='0'){
+				reply(obj,"录入成功");
+				return;
+			}	
+			if(re.err=='1'){
+				reply(obj,"录入失败");
+				return;
+			}					 
+				reply(obj,"数据库错误");		
 			return;	
 		   //console.log(body) // 请求成功的处理逻辑  
 		}
