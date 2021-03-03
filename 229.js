@@ -45,7 +45,7 @@ server.listen(port, hostname, () => {
 	
 
 function help(obj){	
-	reply(obj,"查询电话方法:\n输入 \"电话＋空格＋关键字1＋空格＋关键字2....\"\n录入电话方法:\n输入 \"名称(备注)＋空格＋电话\"");	
+	reply(obj,"①查询电话方法:\n输入 \"电话＋空格＋关键字1＋空格＋关键字2....\"\n②录入电话方法:\n输入 \"名称＋句号＋电话＋句号＋备注＋句号＋地址\"\n(备注和地址是可选项)");	
 }	
 
 
@@ -140,9 +140,8 @@ function isCanReply(obj){
 	if(/select|delete|update/.test(obj.msg)) return {"type":-100};//sql注入
 			
 	//console.log(obj.msg)
-	let a=obj.msg.split(" ");		 
-	
-	
+	//查找信息
+	let a=obj.msg.split(" ");		
 	if(a.length>=2 ){
 			if(a[0]=="电话"){ 
 					a.shift();
@@ -151,25 +150,21 @@ function isCanReply(obj){
 						return {"type":-2};
 					}	
 					return {"type":1,"msg":query};
-			}	else{
-				  let name=a[0];
-				  detail=	getdetail(name);
-				  if(detail!=""){
-				  	name=name.replace("（","(");
-				  	name=name.replace("）",")");
-				  	name=name.replace(detail,"");
-				  	detail=detail.replace("(","");
-				  	detail=detail.replace(")","");
-				  }				  
-					a.shift();
-					let phone=a.join("");
-					if(!checkTel(phone)) return {"type":-3};
-				  
-					return {"type":2,"msg":{"name":name,"phone":phone,"detail":detail,"input":obj.final_from_name}};
-			}			
-	}	
-	
-	 
+			}	
+	}
+		
+	a=obj.msg.split("。");	
+	if(a.length>=2 ){
+		let name=a[0];
+		let phone=a[1];
+		if(!checkTel(phone)) return {"type":-3};
+		let detail="";
+		if(a.length>2) detail=a[2];
+		let address="";
+		if(a.length>3) address=a[3];
+		return {"type":2,"msg":{"name":name,"phone":phone,"detail":detail,"address":address,"input":obj.final_from_name}};
+		console.log({"name":name,"phone":phone,"detail":detail,"address":address,"input":obj.final_from_name}.stringify());
+	}		 
 	return {"type":-4};
 	
 }
