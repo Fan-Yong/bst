@@ -13,8 +13,8 @@
 
 
 		$servername = "";
-		$username = " ";
-		$password = " ";
+		$username = "";
+		$password = "";
 		$conn = new mysqli($servername, $username, $password);
 		$conn->set_charset('utf8');
 		if ($conn->connect_error) {
@@ -35,7 +35,8 @@
 		}
 		//echo $query;
 		
-		$sql="SELECT  name,detail,phone,inputer FROM baishitong.telephone where ".$query."  LIMIT 5";
+		$sql="SELECT  name,detail,phone,inputer,address FROM baishitong.telephone where ".$query."  LIMIT 10";
+		//echo $sql;
 		$stmt = $conn->prepare($sql);
 	  //$stmt->bind_param('s',$query);
 		$stmt->execute();
@@ -45,13 +46,19 @@
   		$name=$row["name"];
   		$phone=$row["phone"];
 			$detail=$row["detail"];
+			$address=$row["address"];
 			$inputer=$row["inputer"];
 			//echo $detail;
-			if($detail==''){
-  			$reply=$reply.$name.":".$phone."\\n";
-			}else{
-				$reply=$reply.$name."(".$detail."):".$phone;
+			$reply=$reply."【".$name;
+			if($detail!=''){
+  			$reply=$reply."(".$detail.")";
 			}
+			$reply=$reply."】\\n";
+			$reply=$reply.$phone;
+			if($address!=''){
+				$reply=$reply."\\n地址：".$address;
+			}
+			
 			if($inputer!=''){
 				$reply=$reply."(信息提供:".$inputer.")";
 			}
