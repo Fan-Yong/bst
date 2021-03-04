@@ -145,6 +145,9 @@ function isCanReply(obj){
 	if(a.length>=2 ){
 			if(a[0]=="电话"){ 
 					a.shift();
+					for(let j=0;j<a.length;j++){
+						a[j]=a[j].replace(/电话/g,'');
+					}	
 					let query=a.join("%");
 					if (query.length<2) {
 						return {"type":-2};

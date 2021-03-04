@@ -12,7 +12,7 @@
 		}
 
 
-		$servername = " ";
+		$servername = "";
 		$username = " ";
 		$password = " ";
 		$conn = new mysqli($servername, $username, $password);
@@ -26,7 +26,8 @@
 		$num = count($q);
 		$query="";
 		for($i=0;$i<$num;$i++){
-			$query=$query." CONCAT(name,detail) like '%".$q[$i]."%' ";
+			$temp_str="%".implode("%", preg_split("//u", $q[$i], -1, PREG_SPLIT_NO_EMPTY))."%";
+			$query=$query." CONCAT(name,detail) like '".$temp_str."' ";
 			if($i<$num-1){
 				$query=$query." and ";
 			}
@@ -54,10 +55,10 @@
 			if($inputer!=''){
 				$reply=$reply."(信息提供:".$inputer.")";
 			}
-			$reply=$reply."\\n";
+			$reply=$reply."\\n\\n";
 		}
 		if($reply!=''){
-			$reply=substr($reply,0,-2);
+			$reply=substr($reply,0,-4);
 			echo "{ \"err\":\"0\", \"msg\":\"".$reply."\"}";
 		}else{
 			echo "{ \"err\":\"1\" }";//查无此人
