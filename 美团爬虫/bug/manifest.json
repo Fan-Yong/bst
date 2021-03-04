@@ -1,0 +1,29 @@
+{
+  "name": "DSP",
+  "description": "DSP",
+  "version": "1.0",
+  "permissions": ["activeTab","storage","https://www.meituan.com/meishi/*"],
+   "content_scripts": 
+    [
+        {
+            "matches": ["https://www.meituan.com/meishi/*"], 
+            "all_frames": true,          
+            "js": ["js/jquery.min.js","js/content-script.js"],            
+            "run_at": "document_end"
+        }
+    ],
+   "background":
+    {
+        "scripts": ["js/jquery.min.js","js/background.js"]
+    }, 
+   "web_accessible_resources":[
+   "js/jcontent-script.js"
+   ],
+  
+  "browser_action": {
+      "default_title": "DSP.",
+      "default_icon": "icon48.png",
+      "default_popup": "popup.html"
+  },
+  "manifest_version": 2
+}
