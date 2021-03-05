@@ -12,9 +12,9 @@
 		}
 
 
-		$servername = "";
-		$username = "";
-		$password = "";
+		$servername = " ";
+		$username = " ";
+		$password = " ";
 		$conn = new mysqli($servername, $username, $password);
 		$conn->set_charset('utf8');
 		if ($conn->connect_error) {
@@ -27,7 +27,7 @@
 		$query="";
 		for($i=0;$i<$num;$i++){
 			$temp_str="%".implode("%", preg_split("//u", $q[$i], -1, PREG_SPLIT_NO_EMPTY))."%";
-			$query=$query." CONCAT(name,detail) like '".$temp_str."' ";
+			$query=$query." CONCAT(name,detail,address) like '".$temp_str."' ";
 			if($i<$num-1){
 				$query=$query." and ";
 			}
