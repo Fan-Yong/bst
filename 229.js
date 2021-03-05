@@ -16,7 +16,10 @@ const server = http.createServer((req, res) => {
     		 try{ 
     		 	
     	  	obj=getUrlVars(decodeURIComponent(data))  
-    	  	//console.log(":::"+decodeURIComponent(data))	    	  	  	 
+    	  	//console.log(":::"+decodeURIComponent(data))	
+    	  	if(decodeURIComponent(data).indexOf("nickname=涿州查号台,wxid=wxid_dm9fvc38kmpj22")>0){
+    	  		obj.msg="help";
+    	  	}	    	  	  	 
     	  	
     	  }catch(e){
     	  	obj={"type":99999}
@@ -45,7 +48,7 @@ server.listen(port, hostname, () => {
 	
 
 function help(obj){	
-	reply(obj,"①查询电话方法:\n输入 \"电话＋空格＋关键字1＋空格＋关键字2....\"\n②录入电话方法:\n输入 \"名称＋句号＋电话＋句号＋备注＋句号＋地址\"\n(备注和地址是可选项)");	
+	reply(obj,"☆☆感谢使用☆☆\n\n【查询电话方法】\n \"电话＋空格＋要查的内容1＋空格＋要查的内容2.....\"\n※※※※※※※※※※\n例如这样可查麦当劳电话：\n电话 麦当劳\n\n【录入电话方法】\n \"名称＋句号＋电话＋句号＋备注＋句号＋地址\"\n(备注和地址是可选项)\n※※※※※※※※※※\n例如这样可录入麦当劳电话:\n麦当劳。123456789");	
 }	
 
 
@@ -137,6 +140,11 @@ function isCanReply(obj){
 	if(obj.msg=="help"){
 		return {"type":0};
 	}
+	/*console.log(obj.msg);
+	console.log(obj.msg.indexOf("nickname=涿州查号台,wxid=wxid_dm9fvc38kmpj22"));
+	if(obj.msg.indexOf("nickname=涿州查号台,wxid=wxid_dm9fvc38kmpj22")>=0){
+		return {"type":0};
+	}*/
 	if(/select|delete|update/.test(obj.msg)) return {"type":-100};//sql注入
 			
 	//console.log(obj.msg)
