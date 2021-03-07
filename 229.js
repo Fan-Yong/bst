@@ -14,7 +14,7 @@ const server = http.createServer((req, res) => {
     })
     req.on('end', () => {
     		 try{ 
-    		 	
+    		  
     	  	obj=getUrlVars(decodeURIComponent(data))  
     	  	//console.log(":::"+decodeURIComponent(data))	
     	  	if(decodeURIComponent(data).indexOf("nickname=涿州查号台,wxid=wxid_dm9fvc38kmpj22")>0){
@@ -25,7 +25,7 @@ const server = http.createServer((req, res) => {
     	  	obj={"type":99999}
     	  	 console.log('---------解析失败');
     	  }		
-    	  
+    	  obj.msg=obj.msg.replace(/[\r\n]/g,"");
     	  icr=isCanReply(obj);
         console.log("icr:"+icr.type);
         
@@ -135,7 +135,7 @@ function isCanReply(obj){
 	if(obj.type==99999) return {"type":-1};
 	
 	//if((obj.final_from_name).indexOf("元气")>-1 && obj.type==100) 		return true;	
-	//if((obj.from_name).indexOf("老队友")>-1  )  return true;	
+	
 	
 	if(obj.msg=="help"){
 		return {"type":0};
@@ -151,7 +151,7 @@ function isCanReply(obj){
 	//查找信息
 	let a=obj.msg.split(" ");		
 	if(a.length>=2 ){
-			if(a[0]=="电话"){ 
+			if(a[0]=="查询"){ 
 					a.shift();
 					for(let j=0;j<a.length;j++){
 						a[j]=a[j].replace(/电话/g,'');
@@ -163,7 +163,8 @@ function isCanReply(obj){
 					return {"type":1,"msg":query};
 			}	
 	}
-		
+	if((obj.from_name).indexOf("老队友")>-1  )  return false;		
+	if((obj.from_name).indexOf("欢乐足球")>-1  )  return false;	
 	a=obj.msg.split("。");	
 	if(a.length>=2 ){
 		let name=a[0];
