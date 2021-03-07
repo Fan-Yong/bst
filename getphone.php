@@ -44,10 +44,21 @@
 		$result = $stmt->get_result();
 		while($row = $result->fetch_assoc()) {
   		$name=$row["name"];
+			$name = str_replace(array("\r\n", "\r", "\n"), "", $name);
   		$phone=$row["phone"];
+			$phone = str_replace(array("\r\n", "\r", "\n"), "", $phone);
 			$detail=$row["detail"];
+			$detail=str_replace(array("\r\n", "\r", "\n"), "", $detail);
 			$address=$row["address"];
+			$address=str_replace(array("\r\n", "\r", "\n"), "", $address);
 			$inputer=$row["inputer"];
+			$inputer=str_replace(array("\r\n", "\r", "\n"), "", $inputer);
+			if($phone==""){
+				$phone=$detail;
+				$detail="";
+
+			}
+
 			//echo $detail;
 			$reply=$reply."【".$name;
 			if($detail!=''){

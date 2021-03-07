@@ -182,7 +182,8 @@ function isCanReply(obj){
 }
 function  checkTel(str) {
 	  console.log(str);
-    
+	  
+    if(str.trim()=='') return true;
     let matches = str.match(/\d+/g);
     let m="";
     try{
