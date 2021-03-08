@@ -84,7 +84,7 @@ function setmsg(obj,msg){
 				return;
 			}	
 			if(re.err=='1'){
-				reply(obj,"录入失败");
+				//reply(obj,"录入失败");
 				return;
 			}					 
 				reply(obj,"数据库错误");		
@@ -174,6 +174,7 @@ function isCanReply(obj){
 		if(a.length>2) detail=a[2];
 		let address="";
 		if(a.length>3) address=a[3];
+		if(phone=="" && detail=="") return {"type":-3};
 		return {"type":2,"msg":{"name":name,"phone":phone,"detail":detail,"address":address,"input":obj.final_from_name}};
 		console.log({"name":name,"phone":phone,"detail":detail,"address":address,"input":obj.final_from_name}.stringify());
 	}		 
