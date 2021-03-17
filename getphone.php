@@ -1,4 +1,5 @@
 <?php
+		$privatePs="1106";
 		$query="";
 		if (isset($_GET['query'])){
 			$query=$_GET['query'];
@@ -22,8 +23,22 @@
 			die("{ \"err\":\"100\" }");//数据库错误
 		}
 		
+		
 		$q=explode('%', $query);
 		$num = count($q);
+		
+		$privatemsg='0';
+		$tempstr=substr($q[0],-4);
+		if($tempstr==$privatePs){
+  		$q[0] = substr($q[0],0,strlen($q[0])-4);
+  		$privatemsg='1';	
+		}
+
+
+
+
+
+
 		$query="";
 		for($i=0;$i<$num;$i++){
 			$temp_str="%".implode("%", preg_split("//u", $q[$i], -1, PREG_SPLIT_NO_EMPTY))."%";
@@ -34,8 +49,12 @@
 
 		}
 		//echo $query;
-		
-		$sql="SELECT  name,detail,phone,inputer,address FROM baishitong.telephone where ".$query."  LIMIT 10";
+		if($privatemsg=='1'){
+			$sql="SELECT  name,detail,phone,inputer,address FROM baishitong.telephone where ".$query."  LIMIT 10";
+		}	else{
+
+			$sql="SELECT  name,detail,phone,inputer,address FROM baishitong.telephone where ".$query." and privatemsg='0'  LIMIT 10";
+		}
 		//echo $sql;
 		$stmt = $conn->prepare($sql);
 	  //$stmt->bind_param('s',$query);
