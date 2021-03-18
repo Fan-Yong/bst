@@ -133,7 +133,7 @@ function getUrlVars(url) {
 function isCanReply(obj){
 	// console.log(obj.final_from_name+"----------------")
 	if(obj.type==99999) return {"type":-1};
-	if(obj.type==200) return {"type":-5};
+	
 	//if((obj.final_from_name).indexOf("元气")>-1 && obj.type==100) 		return true;	
 	
 	
@@ -163,6 +163,7 @@ function isCanReply(obj){
 					return {"type":1,"msg":query};
 			}	
 	}
+	if(obj.type==200) return {"type":-5};
 	if((obj.from_name).indexOf("老队友")>-1  )  return false;		
 	if((obj.from_name).indexOf("欢乐足球")>-1  )  return false;	
 	a=obj.msg.split("。");	
