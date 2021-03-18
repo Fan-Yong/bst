@@ -133,7 +133,7 @@ function getUrlVars(url) {
 function isCanReply(obj){
 	// console.log(obj.final_from_name+"----------------")
 	if(obj.type==99999) return {"type":-1};
-	
+	if(obj.type==200) return {"type":-5};
 	//if((obj.final_from_name).indexOf("元气")>-1 && obj.type==100) 		return true;	
 	
 	
